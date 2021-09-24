@@ -1,0 +1,55 @@
+-------------------- В power shell --------------
+PS C:\Users\Tochka1168> mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 35
+Server version: 8.0.26 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database example;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use example;
+Database changed
+mysql> create table users (id int, name varchar(255));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_example |
++-------------------+
+| users             |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> exit
+Bye
+PS C:\Users\Tochka1168> mysqldump -uroot -proot --default-character-set=utf8 example > dump_example.sql
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
+PS C:\Users\Tochka1168> mysql sample < dump_example.sql
+строка:1 знак:14
++ mysql sample < dump_example.sql
++              ~
+Оператор "<" зарезервирован для использования в будущем.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : RedirectionNotSupported
+
+----------- В командной строке ------------
+
+Microsoft Windows [Version 10.0.19043.1237]
+(c) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+C:\Users\Tochka1168>mysql sample < dump_example.sql
+ERROR: ASCII '\0' appeared in the statement, but this is not allowed unless option --binary-mode is enabled and mysql is run in non-interactive mode. Set --binary-mode to 1 if ASCII '\0' is expected. Query: ' ■-'.
+
+----------- Вручную изменена кодировка с utf-16 на utf-8 ------------
+C:\Users\Tochka1168>mysql sample < dump_example.sql
+
+C:\Users\Tochka1168>mysqldump -uroot -proot --default-character-set=utf8 mysql --tables help_keyword --where="true limit 100" > dump_mysql_help_keyword.sql
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
